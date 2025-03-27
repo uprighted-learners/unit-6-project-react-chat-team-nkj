@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Routes
 app.use('/api/users', userRoutes);
-app.use('/api/rooms',roomRoutes);
+app.use('/rooms',roomRoutes);
 app.use('/api/messages',messageRoutes);
 
 
