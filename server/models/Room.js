@@ -3,9 +3,14 @@ const mongoose = require('mongoose');
 
 const RoomSchema = new mongoose.Schema(
     {
-        "name": "Continental",
-        "description": "No business conducted",
-        "addedUsers": ["John Wick", "Winston", "Ms. Perkins"]
-    })
+        name: { type: String, required: true },
+        description: { type: String, required: true },
+        addedUsers: [{ type: String }] 
+    },
+    { timestamps: true } 
+);
+
+
 
     module.exports = mongoose.model('Room', RoomSchema);
+
