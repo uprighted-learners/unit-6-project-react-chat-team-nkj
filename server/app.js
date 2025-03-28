@@ -1,4 +1,4 @@
-// filepath: server/server.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -12,21 +12,23 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+// Verify environment variables
+console.log('MONGO_URI:', process.env.MONGO_URI);
+console.log('PORT:', process.env.PORT);
+
 // Connect to MongoDB
-
-
-
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    dbName: "teamnkj"
     // useCreateIndex: true
 }).then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+    .catch(err => console.log('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/users', userRoutes);
-app.use('/rooms',roomRoutes);
-app.use('/api/messages',messageRoutes);
+app.use('/rooms', roomRoutes);
+app.use('/api/messages', messageRoutes);
 
 
 const PORT = process.env.PORT || 5000;
