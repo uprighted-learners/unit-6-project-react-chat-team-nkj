@@ -5,8 +5,9 @@ const Room = require('../models/Room.js');
 router.post('/create', async (req, res) => {
     try {
         const room = new Room(req.body);
+        console.log(room);
         await room.save();
-        res.status(201).json(newRoom);
+        res.status(201).json(room);
     } catch (error) {
         res.status(400).json({ error: error });
     }
@@ -21,14 +22,19 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
-        await Room.findByIdAndDelete(req.params.id);
-        res.status(204).send();
+        
+        const room = await Room.findByIdAndDelete(req.params.id);
+        if (!room) {
+            return res.status(404).json({ error: 'Room not found' });
+        }
+        res.status(200).json({ message: 'Room deleted successfully' });
     } catch (error) {
-        res.status(400).json({ error: error });
+        res.status(400).json({ error: error.message });
     }
 });
+
 router.put('/:id', async (req, res) => {
     try {
         await Room.findByIdAndUpdate(req.params.id, req.body);

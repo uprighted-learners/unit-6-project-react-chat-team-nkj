@@ -5,7 +5,11 @@ const Message = require('../models/Message');
 // Get all messages in a room
 router.get('/:roomId', async (req, res) => {
     try {
+        const { 'Room-Id': roomId } = req.params
+
         const messages = await Message.find({ room: req.params.roomId }).populate('user', 'firstName lastName');
+        console.log('Messages:', messages); // Log the query results
+
         res.status(200).json(messages);
     } catch (error) {
         res.status(400).json({ error: error.message });

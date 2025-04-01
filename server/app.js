@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes.js');
 const roomRoutes = require('./routes/roomRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js')
+const TestRoutes = require('./routes/TestRoutes.js');
 dotenv.config();
 
 const app = express();
@@ -27,6 +28,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use('/api/users', userRoutes);
 app.use('/rooms',roomRoutes);
 app.use('/api/messages',messageRoutes);
+app.use('/Test',TestRoutes);
 
 
 const PORT = process.env.PORT || 5000;
