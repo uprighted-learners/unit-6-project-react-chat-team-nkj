@@ -5,12 +5,12 @@ const RoomSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
         description: { type: String, required: true },
-        addedUsers: [{ type: String }] 
+        addedUsers: [{ type: String }]
     },
-    { timestamps: true } 
+    { timestamps: true }
 );
 
 
 
-    module.exports = mongoose.model('Room', RoomSchema);
+module.exports = mongoose.model('Room', RoomSchema);
 

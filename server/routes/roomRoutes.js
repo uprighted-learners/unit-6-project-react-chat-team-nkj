@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Room = require('../models/Room.js');
+const { isAdmin } = require('../middleware/adminMiddleware');
 
 router.post('/create', async (req, res) => {
     try {
         const room = new Room(req.body);
         await room.save();
-        res.status(201).json(newRoom);
+        res.status(201).json(room);
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: error });
     }
 });
@@ -21,18 +23,18 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     try {
         await Room.findByIdAndDelete(req.params.id);
-        res.status(204).send();
+        res.status(200).send("Room deleted successfully");
     } catch (error) {
         res.status(400).json({ error: error });
     }
 });
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAdmin, async (req, res) => {
     try {
         await Room.findByIdAndUpdate(req.params.id, req.body);
-        res.status(200).send();
+        res.status(200).send("Room updated successfully");
     } catch (error) {
         res.status(400).json({ error: error });
     }
