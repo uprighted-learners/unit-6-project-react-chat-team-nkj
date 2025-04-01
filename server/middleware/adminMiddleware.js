@@ -5,9 +5,9 @@ console.log(User)
 
 const isAdmin = async (req, res, next) => {
 
-    // if (!req.headers.authorization) {
-    //     return res.status(401).json({ error: 'Unauthorized' });
-    // }
+    if (!req.headers.authorization) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
 
     let token = req.headers.authorization.split(' ')[1];
 
