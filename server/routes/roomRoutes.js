@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Room = require('../models/Room.js');
+const { isAdmin } = require('../middleware/adminMiddleware');
 
 router.post('/create', async (req, res) => {
     try {
@@ -9,6 +10,7 @@ router.post('/create', async (req, res) => {
         await room.save();
         res.status(201).json(room);
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: error });
     }
 });
@@ -22,23 +24,18 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     try {
-        
-        const room = await Room.findByIdAndDelete(req.params.id);
-        if (!room) {
-            return res.status(404).json({ error: 'Room not found' });
-        }
-        res.status(200).json({ message: 'Room deleted successfully' });
+        await Room.findByIdAndDelete(req.params.id);
+        res.status(200).send("Room deleted successfully");
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
-
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAdmin, async (req, res) => {
     try {
         await Room.findByIdAndUpdate(req.params.id, req.body);
-        res.status(200).send();
+        res.status(200).send("Room updated successfully");
     } catch (error) {
         res.status(400).json({ error: error });
     }

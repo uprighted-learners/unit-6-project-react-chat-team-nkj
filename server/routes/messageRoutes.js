@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Message = require('../models/Message');
+const { isAdmin } = require('../middleware/adminMiddleware');
 
 // Get all messages in a room
 router.get('/:roomId', async (req, res) => {
@@ -8,7 +9,7 @@ router.get('/:roomId', async (req, res) => {
         const { 'Room-Id': roomId } = req.params
 
         const messages = await Message.find({ room: req.params.roomId }).populate('user', 'firstName lastName');
-        console.log('Messages:', messages); // Log the query results
+        console.log('Messages:', messages);
 
         res.status(200).json(messages);
     } catch (error) {
@@ -20,8 +21,8 @@ router.get('/:roomId', async (req, res) => {
 router.post('/:roomId', async (req, res) => {
     try {
         const message = new Message({
-            user: req.body.user, 
-            room: req.params.roomId, 
+            user: req.body.user,
+            room: req.params.roomId,
             body: req.body.body
         });
         await message.save();
@@ -32,13 +33,13 @@ router.post('/:roomId', async (req, res) => {
 });
 
 // Update a message
-router.put('/:messageId', async (req, res) => {
+router.put('/:messageId', isAdmin, async (req, res) => {
     try {
         const message = await Message.findById(req.params.messageId);
         if (!message) {
             return res.status(404).json({ error: 'Message not found' });
         }
-        message.body = req.body.body || message.body; 
+        message.body = req.body.body || message.body;
         await message.save();
         res.status(200).json(message);
     } catch (error) {
@@ -47,7 +48,7 @@ router.put('/:messageId', async (req, res) => {
 });
 
 // Delete a message
-router.delete('/:messageId', async (req, res) => {
+router.delete('/:messageId', isAdmin, async (req, res) => {
     try {
         const message = await Message.findById(req.params.messageId);
         if (!message) {
