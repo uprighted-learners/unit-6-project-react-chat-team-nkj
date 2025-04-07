@@ -6,7 +6,11 @@ const { isAdmin } = require('../middleware/adminMiddleware');
 // Get all messages in a room
 router.get('/:roomId', async (req, res) => {
     try {
+        const { 'Room-Id': roomId } = req.params
+
         const messages = await Message.find({ room: req.params.roomId }).populate('user', 'firstName lastName');
+        console.log('Messages:', messages);
+
         res.status(200).json(messages);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -14,7 +18,7 @@ router.get('/:roomId', async (req, res) => {
 });
 
 // Create a new message in a room
-router.post('/:roomId', isAdmin, async (req, res) => {
+router.post('/:roomId', async (req, res) => {
     try {
         const message = new Message({
             user: req.body.user,

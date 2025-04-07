@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes.js');
 const roomRoutes = require('./routes/roomRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js')
+const TestRoutes = require('./routes/TestRoutes.js');
 dotenv.config();
 
 const app = express();

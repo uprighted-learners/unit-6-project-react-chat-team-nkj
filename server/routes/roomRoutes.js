@@ -6,6 +6,7 @@ const { isAdmin } = require('../middleware/adminMiddleware');
 router.post('/create', async (req, res) => {
     try {
         const room = new Room(req.body);
+        console.log(room);
         await room.save();
         res.status(201).json(room);
     } catch (error) {
@@ -28,7 +29,7 @@ router.delete('/delete/:id', isAdmin, async (req, res) => {
         await Room.findByIdAndDelete(req.params.id);
         res.status(200).send("Room deleted successfully");
     } catch (error) {
-        res.status(400).json({ error: error });
+        res.status(400).json({ error: error.message });
     }
 });
 router.put('/:id', isAdmin, async (req, res) => {
