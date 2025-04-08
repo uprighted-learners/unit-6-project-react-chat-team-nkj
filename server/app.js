@@ -6,12 +6,14 @@ const userRoutes = require('./routes/userRoutes.js');
 const roomRoutes = require('./routes/roomRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js')
 const TestRoutes = require('./routes/TestRoutes.js');
+const cors = require('cors');
 dotenv.config();
 
 const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 // Verify environment variables
 console.log('MONGO_URI:', process.env.MONGO_URI);
