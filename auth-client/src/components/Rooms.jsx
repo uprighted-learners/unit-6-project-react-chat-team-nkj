@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Rooms.css";
 
-const Rooms = ({setRoomId}) => {
+const Rooms = ({ setRoomId }) => {
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
@@ -25,18 +26,19 @@ const Rooms = ({setRoomId}) => {
     fetchRooms();
   }, []);
 
-  const handleRoomClick = (roomId) => { 
+  const handleRoomClick = (roomId) => {
     setRoomId(roomId);
     navigate(`/rooms/${roomId}`);
   };
 
   return (
-    <div>
+    <div className="rooms-container">
       <h2>Available Rooms</h2>
-      <ul>
+      <ul className="rooms-list">
         {rooms.map((room) => (
-          <li key={room._id} onClick={() => handleRoomClick(room._id)}>
+          <li key={room._id}>
             {room.name}
+            <button onClick={() => handleRoomClick(room._id)}>Join Room</button>
           </li>
         ))}
       </ul>

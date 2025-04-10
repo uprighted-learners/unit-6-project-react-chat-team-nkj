@@ -7,6 +7,7 @@ const roomRoutes = require('./routes/roomRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js')
 const TestRoutes = require('./routes/TestRoutes.js');
 const cors = require('cors');
+const authMiddleware = require('./middleware/authMiddleware.js');
 dotenv.config();
 
 const app = express();
@@ -30,6 +31,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use(authMiddleware)
 app.use('/api/rooms', roomRoutes);
 app.use('/api/messages', messageRoutes);
 
