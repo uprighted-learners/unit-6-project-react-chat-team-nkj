@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./Room.css";
 
 const Room = ({ roomId }) => {
   const [messages, setMessages] = useState([]);
@@ -15,7 +16,7 @@ const Room = ({ roomId }) => {
         });
         const data = await response.json();
         console.log(data);
-;        setMessages(data);
+        ; setMessages(data);
       } catch (err) {
         console.error(err);
       }
@@ -33,7 +34,7 @@ const Room = ({ roomId }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ body: newMessage }),
+        body: JSON.stringify({ body: newMessage, user: localStorage.getItem("uid") }),
       });
       const data = await response.json();
       setMessages((prevMessages) => [...prevMessages, data]);
@@ -44,12 +45,12 @@ const Room = ({ roomId }) => {
   };
 
   return (
-    <div>
+    <div className="room-container">
       <h2>Room</h2>
       <div>
         {messages.map((message) => (
           <p key={message._id}>
-            <strong>{message.user}:</strong> {message.body}
+            <strong>{message.user.firstName + " " + message.user.lastName}:</strong> {message.body}
           </p>
         ))}
       </div>

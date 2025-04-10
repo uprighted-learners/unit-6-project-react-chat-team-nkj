@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import './App.css'
 import { Route, Routes, Navigate } from 'react-router-dom'
-import Auth from './components/Auth';
+import Auth from './components/Auth/Auth';
 import Rooms from './components/Rooms';
 import Room from './components/Room';
 
@@ -53,9 +53,9 @@ function App() {
             </>
           )}
         />
-        <Route path='/rooms' element={token ? <Rooms setRoomId ={setRoomId} /> : <Navigate to="/" />} />
+        <Route path='/rooms' element={token ? <Rooms setRoomId={setRoomId} /> : <Navigate to="/" />} />
 
-         <Route path="/rooms/:roomId" element={token ? <Room roomId={roomId} /> : <Navigate to="/" />} /> 
+        <Route path="/rooms/:roomId" element={token ? <Room roomId={roomId} /> : <Navigate to="/" />} />
 
       </Routes>
     </>

@@ -19,9 +19,10 @@ router.get('/:roomId', async (req, res) => {
 
 // Create a new message in a room
 router.post('/:roomId', async (req, res) => {
+    console.log(req.user)
     try {
         const message = new Message({
-            user: req.body.user,
+            user: req.user._id,
             room: req.params.roomId,
             body: req.body.body
         });
