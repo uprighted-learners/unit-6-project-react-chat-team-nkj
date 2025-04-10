@@ -33,12 +33,21 @@ function App() {
   }
     , []);
 
+  useEffect(() => {
+    const storedRoomId = localStorage.getItem('roomId')
+    if (storedRoomId) {
+      setRoomId(storedRoomId)
+    }
+  }, []);
+
   return (
     <>
       {token && (
         <button onClick={handleLogout}>Logout</button>
 
       )}
+
+
 
       <Routes>
 
@@ -55,7 +64,7 @@ function App() {
         />
         <Route path='/rooms' element={token ? <Rooms setRoomId={setRoomId} /> : <Navigate to="/" />} />
 
-        <Route path="/rooms/:roomId" element={token ? <Room roomId={roomId} /> : <Navigate to="/" />} />
+        <Route path="/rooms/:roomId" element={token ? <Room roomId={roomId} /> : <></>} />
 
       </Routes>
     </>

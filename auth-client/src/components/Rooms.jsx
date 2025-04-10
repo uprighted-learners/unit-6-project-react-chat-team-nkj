@@ -28,6 +28,7 @@ const Rooms = ({ setRoomId }) => {
 
   const handleRoomClick = (roomId) => {
     setRoomId(roomId);
+    localStorage.setItem("roomId", roomId);
     navigate(`/rooms/${roomId}`);
   };
 
