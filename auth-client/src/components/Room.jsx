@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Room.css";
 
 const Room = ({ roomId }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef(null);
+
 
   const fetchMessages = async () => {
     try {
@@ -24,6 +26,13 @@ const Room = ({ roomId }) => {
 
     fetchMessages();
   }, [roomId]);
+
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   const handleSendMessage = async () => {
     try {
@@ -51,7 +60,12 @@ const Room = ({ roomId }) => {
     }
   };
 
+  const returnButton = () => {
+    window.location.href = "/rooms";
+  }
+
   return (
+
     <div className="room-container">
       <h2>Chat Room</h2>
       <div className="messages-container">
@@ -71,6 +85,12 @@ const Room = ({ roomId }) => {
         />
         <button onClick={handleSendMessage}>Send</button>
       </div>
+      <div className="return-button">
+
+        <button onClick={returnButton}>Go Back</button>
+      </div>
+      <div ref={messagesEndRef} /> {/* Empty div to scroll to the bottom */}
+
     </div>
   );
 };

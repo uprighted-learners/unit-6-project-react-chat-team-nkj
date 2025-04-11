@@ -9,6 +9,10 @@
     font-family: Arial, sans-serif;
 }
 
+.room-container h2 {
+    font-size: xx-large;
+}
+
 .messages-container {
     flex: 1;
     overflow-y: auto;
@@ -18,7 +22,7 @@
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     position: sticky;
     top: 0;
-    font-size: xx-large;
+    font-size: x-large;
 }
 
 .message-input {
@@ -26,4 +30,19 @@
     padding: 10px;
     background-color: #fff;
     border-top: 1px solid #ddd;
+}
+
+.return-button {
+
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+    position: position;
+    top: 10px;
+    left: 20px;
+    z-index: 1000;
 }
